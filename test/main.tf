@@ -1,3 +1,11 @@
+module "disabled" {
+  source  = "../"
+  enabled = false
+  users   = [
+    "name,email,user2,user2@example.com",
+  ]
+}
+
 module "users" {
   source = "../"
 

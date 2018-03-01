@@ -1,28 +1,28 @@
 output "disabled" {
   description = "List of user disabled status"
-  value       = "${datadog_user.users.*.disabled}"
+  value       = "${compact(concat(datadog_user.users.*.disabled, list("")))}"
 }
 
 output "ids" {
   description = "List of user IDs"
-  value       = "${datadog_user.users.*.id}"
+  value       = "${compact(concat(datadog_user.users.*.id, list("")))}"
 }
 
 output "verified" {
   description = "List of user verified status"
-  value       = "${datadog_user.users.*.verified}"
+  value       = "${compact(concat(datadog_user.users.*.verified, list("")))}"
 }
 
 output "admins" {
-  value = "${null_resource.users.*.triggers.admin}"
+  value = "${compact(concat(null_resource.users.*.triggers.admin, list("")))}"
 }
 
 output "emails" {
-  value = "${null_resource.users.*.triggers.email}"
+  value = "${compact(concat(null_resource.users.*.triggers.email, list("")))}"
 }
 
 output "names" {
-  value = "${null_resource.users.*.triggers.name}"
+  value = "${compact(concat(null_resource.users.*.triggers.name, list("")))}"
 }
 
 output "users" {
