@@ -6,7 +6,7 @@ terraform-datadog-users
 Terraform module for managing Datadog users
 
 This module simulates a list of maps data structure. Can serve as an example
-for anyone that needed that.
+for anyone needing that.
 
 ```hcl
 module "datadog-users" {
