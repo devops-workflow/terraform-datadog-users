@@ -10,7 +10,8 @@ for anyone that needed that.
 
 ```hcl
 module "datadog-users" {
-  source = "../"
+  source  = "devops-workflow/users/datadog"
+  version = "0.0.1"
 
   users = [
     "name,email,user1,user1@example.com",
