@@ -21,8 +21,16 @@ output "emails" {
   value = "${compact(concat(null_resource.users.*.triggers.email, list("")))}"
 }
 
+output "handles" {
+  value = "${compact(concat(null_resource.users.*.triggers.handle, list("")))}"
+}
+
 output "names" {
   value = "${compact(concat(null_resource.users.*.triggers.name, list("")))}"
+}
+
+output "roles" {
+  value = "${compact(concat(null_resource.users.*.triggers.role, list("")))}"
 }
 
 output "users" {

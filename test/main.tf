@@ -11,9 +11,9 @@ module "users" {
   source = "../"
 
   users = [
-    "name,email,user1,user1@example.com",
-    "name,email,admin,disabled,admin1,admin1@example.com,true,false",
-    "name,email,disabled,dis1,dis1@example.com,true",
+    "name,handle,user1,user1@example.com",
+    "name,handle,admin,disabled,admin1,admin1@example.com,true,false",
+    "name,handle,email,disabled,role,dis1,dis1@example.com,disy1@example.com,false,ro",
   ]
 }
 
@@ -40,8 +40,16 @@ output "emails" {
   value = "${module.users.emails}"
 }
 
+output "handles" {
+  value = "${module.users.handles}"
+}
+
 output "names" {
   value = "${module.users.names}"
+}
+
+output "roles" {
+  value = "${module.users.roles}"
 }
 
 output "users" {
