@@ -60,7 +60,6 @@ resource "null_resource" "users" {
          length(split(",",element(var.users, count.index))) / 2,
          length(split(",",element(var.users, count.index))))
       ), "role", "st")}"
-
   }
 }
 
