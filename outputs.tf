@@ -1,16 +1,16 @@
 output "disabled" {
   description = "List of user disabled status"
-  value       = "${compact(concat(datadog_user.users.*.disabled, list("")))}"
+  value       = "${compact(concat(datadog_user.this.*.disabled, list("")))}"
 }
 
 output "ids" {
   description = "List of user IDs"
-  value       = "${compact(concat(datadog_user.users.*.id, list("")))}"
+  value       = "${compact(concat(datadog_user.this.*.id, list("")))}"
 }
 
 output "verified" {
   description = "List of user verified status"
-  value       = "${compact(concat(datadog_user.users.*.verified, list("")))}"
+  value       = "${compact(concat(datadog_user.this.*.verified, list("")))}"
 }
 
 output "emails" {
