@@ -13,24 +13,19 @@ output "verified" {
   value       = "${compact(concat(datadog_user.users.*.verified, list("")))}"
 }
 
-output "admins" {
-  value = "${compact(concat(null_resource.users.*.triggers.admin, list("")))}"
-}
-
 output "emails" {
-  value = "${compact(concat(null_resource.users.*.triggers.email, list("")))}"
+  description = "List of user emails"
+  value       = "${compact(concat(data.null_data_source.this.*.outputs.email, list("")))}"
 }
 
 output "handles" {
-  value = "${compact(concat(null_resource.users.*.triggers.handle, list("")))}"
+  description = "List of user handles"
+  value       = "${compact(concat(data.null_data_source.this.*.outputs.handle, list("")))}"
 }
 
 output "names" {
-  value = "${compact(concat(null_resource.users.*.triggers.name, list("")))}"
-}
-
-output "roles" {
-  value = "${compact(concat(null_resource.users.*.triggers.role, list("")))}"
+  description = "List of user names"
+  value       = "${compact(concat(data.null_data_source.this.*.outputs.name, list("")))}"
 }
 
 output "users" {
