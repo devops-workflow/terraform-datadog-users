@@ -1,5 +1,5 @@
 module "users" {
-  source = "../"
+  source = "../../"
 
   users = [
     {
