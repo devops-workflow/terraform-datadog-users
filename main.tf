@@ -8,67 +8,22 @@ module "enabled" {
   value   = "${var.enabled}"
 }
 
-resource "null_resource" "users" {
+data "null_data_source" "this" {
   count = "${module.enabled.value ? length(var.users) : 0}"
 
-  triggers {
-    name = "${lookup(zipmap(
-      slice(split(",",element(var.users, count.index)), 0, length(split(",",element(var.users, count.index)))/2),
-      slice(split(",",element(var.users, count.index)),
-         length(split(",",element(var.users, count.index))) / 2,
-         length(split(",",element(var.users, count.index))))
-      ), "name")}"
-
-    admin = "${lookup(zipmap(
-      slice(split(",",element(var.users, count.index)), 0, length(split(",",element(var.users, count.index)))/2),
-      slice(split(",",element(var.users, count.index)),
-         length(split(",",element(var.users, count.index))) / 2,
-         length(split(",",element(var.users, count.index))))
-      ), "admin", "false")}"
-
-    disabled = "${lookup(zipmap(
-      slice(split(",",element(var.users, count.index)), 0, length(split(",",element(var.users, count.index)))/2),
-      slice(split(",",element(var.users, count.index)),
-         length(split(",",element(var.users, count.index))) / 2,
-         length(split(",",element(var.users, count.index))))
-      ), "disabled", "false")}"
-
-    email = "${lookup(zipmap(
-      slice(split(",",element(var.users, count.index)), 0, length(split(",",element(var.users, count.index)))/2),
-      slice(split(",",element(var.users, count.index)),
-         length(split(",",element(var.users, count.index))) / 2,
-         length(split(",",element(var.users, count.index))))
-      ), "email",
-      lookup(zipmap(
-        slice(split(",",element(var.users, count.index)), 0, length(split(",",element(var.users, count.index)))/2),
-        slice(split(",",element(var.users, count.index)),
-           length(split(",",element(var.users, count.index))) / 2,
-           length(split(",",element(var.users, count.index))))
-        ), "handle")
-    )}"
-
-    handle = "${lookup(zipmap(
-      slice(split(",",element(var.users, count.index)), 0, length(split(",",element(var.users, count.index)))/2),
-      slice(split(",",element(var.users, count.index)),
-         length(split(",",element(var.users, count.index))) / 2,
-         length(split(",",element(var.users, count.index))))
-      ), "handle")}"
-
-    role = "${lookup(zipmap(
-      slice(split(",",element(var.users, count.index)), 0, length(split(",",element(var.users, count.index)))/2),
-      slice(split(",",element(var.users, count.index)),
-         length(split(",",element(var.users, count.index))) / 2,
-         length(split(",",element(var.users, count.index))))
-      ), "role", "st")}"
+  inputs {
+    handle = "${lookup(var.users[count.index], "handle")}"
+    email  = "${lookup(var.users[count.index], "email", lookup(var.users[count.index], "handle"))}"
+    name   = "${lookup(var.users[count.index], "name")}"
   }
 }
 
-resource "datadog_user" "users" {
+resource "datadog_user" "this" {
   count    = "${module.enabled.value ? length(var.users) : 0}"
-  disabled = "${element(null_resource.users.*.triggers.disabled, count.index)}"
-  email    = "${element(null_resource.users.*.triggers.email, count.index)}"
-  handle   = "${element(null_resource.users.*.triggers.handle, count.index)}"
-  is_admin = "${element(null_resource.users.*.triggers.admin, count.index)}"
-  name     = "${element(null_resource.users.*.triggers.name, count.index)}"
-  role     = "${element(null_resource.users.*.triggers.role, count.index)}"
+  disabled = "${lookup(var.users[count.index], "disabled", false)}"
+  email    = "${lookup(var.users[count.index], "email", lookup(var.users[count.index], "handle"))}"
+  handle   = "${lookup(var.users[count.index], "handle")}"
+  is_admin = "${lookup(var.users[count.index], "is_admin", false)}"
+  name     = "${lookup(var.users[count.index], "name")}"
+  role     = "${lookup(var.users[count.index], "role", "st")}"
 }

@@ -1,36 +1,31 @@
 output "disabled" {
   description = "List of user disabled status"
-  value       = "${compact(concat(datadog_user.users.*.disabled, list("")))}"
+  value       = "${compact(concat(datadog_user.this.*.disabled, list("")))}"
 }
 
 output "ids" {
   description = "List of user IDs"
-  value       = "${compact(concat(datadog_user.users.*.id, list("")))}"
+  value       = "${compact(concat(datadog_user.this.*.id, list("")))}"
 }
 
 output "verified" {
   description = "List of user verified status"
-  value       = "${compact(concat(datadog_user.users.*.verified, list("")))}"
-}
-
-output "admins" {
-  value = "${compact(concat(null_resource.users.*.triggers.admin, list("")))}"
+  value       = "${compact(concat(datadog_user.this.*.verified, list("")))}"
 }
 
 output "emails" {
-  value = "${compact(concat(null_resource.users.*.triggers.email, list("")))}"
+  description = "List of user emails"
+  value       = "${compact(concat(data.null_data_source.this.*.outputs.email, list("")))}"
 }
 
 output "handles" {
-  value = "${compact(concat(null_resource.users.*.triggers.handle, list("")))}"
+  description = "List of user handles"
+  value       = "${compact(concat(data.null_data_source.this.*.outputs.handle, list("")))}"
 }
 
 output "names" {
-  value = "${compact(concat(null_resource.users.*.triggers.name, list("")))}"
-}
-
-output "roles" {
-  value = "${compact(concat(null_resource.users.*.triggers.role, list("")))}"
+  description = "List of user names"
+  value       = "${compact(concat(data.null_data_source.this.*.outputs.name, list("")))}"
 }
 
 output "users" {

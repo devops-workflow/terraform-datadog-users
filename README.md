@@ -5,27 +5,34 @@ terraform-datadog-users
 
 Terraform module for managing Datadog users
 
-This module simulates a list of maps data structure. Can serve as an example
-for anyone needing that.
-
 ```hcl
 module "datadog-users" {
   source  = "devops-workflow/users/datadog"
-  version = "0.1.0"
+  version = "1.0.0"
 
   users = [
-    "name,email,user1,user1@example.com",
-    "name,email,user2,user2@example.com",
-    "name,email,admin,disabled,admin1,admin1@example.com,true,false",
-    "name,email,disabled,dis1,dis1@example.com,true",
-    "name,email,admin,admin2,admin2@example.com,true",
+    {
+      name   = "user1"
+      handle = "user1@example.com"
+    },
+    {
+      name     = "admin1"
+      handle   = "admin1@example.com"
+      admin    = "true"
+      disabled = "false"
+    },
+    {
+      name     = "dis1"
+      handle   = "dis1@example.com"
+      email    = "disy1@example.com"
+      disabled = "true"
+      role     = "ro"
+    },
   ]
 }
 ```
 
-User data structure is a list of strings that represent maps.
-Each string is a comma separated list of key names followed by values.
-
+User data structure is a list of maps.
 
 #### User field mappings
 
